@@ -16,7 +16,7 @@ import java.net.URL;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.anyUrl;
 
-public class JustWireMock {
+public class A_JustWireMock {
 
     @Rule
     public WireMockRule rule = new WireMockRule();
