@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Unified Streaming Platform(version=1.7.32) -->
+<MPD
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="urn:mpeg:dash:schema:mpd:2011"
+  xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 http://standards.iso.org/ittf/PubliclyAvailableStandards/MPEG-DASH_schema_files/DASH-MPD.xsd"
+  type="static"
+  mediaPresentationDuration="PT10.105395S"
+  maxSegmentDuration="PT7S"
+  minBufferTime="PT3.200S"
+  profiles="urn:dvb:dash:profile:dvb-dash:2014,urn:dvb:dash:profile:dvb-dash:isoff-ext-live:2014">
+  <Period
+    id="1"
+    duration="PT10.105395S">
+    <BaseURL>dash/</BaseURL>
+    <AdaptationSet
+      group="1"
+      contentType="audio"
+      lang="en"
+      minBandwidth="128000"
+      maxBandwidth="320000"
+      segmentAlignment="true"
+      audioSamplingRate="48000"
+      mimeType="audio/mp4"
+      codecs="mp4a.40.2"
+      startWithSAP="1">
+      <AudioChannelConfiguration
+        schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011"
+        value="2">
+      </AudioChannelConfiguration>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main" />
+      <SegmentTemplate
+        timescale="48000"
+        duration="307200"
+        initialization="vf_p01j0c7s_cdb26601-af20-496a-acc0-f42c8b0af92a-$RepresentationID$.dash"
+        media="vf_p01j0c7s_cdb26601-af20-496a-acc0-f42c8b0af92a-$RepresentationID$-$Number$.m4s">
+      </SegmentTemplate>
+      <Representation
+        id="audio_eng=128000"
+        bandwidth="128000">
+      </Representation>
+      <Representation
+        id="audio_eng=320000"
+        bandwidth="320000">
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet
+      group="1"
+      contentType="audio"
+      lang="en"
+      minBandwidth="48000"
+      maxBandwidth="96000"
+      segmentAlignment="true"
+      audioSamplingRate="48000"
+      mimeType="audio/mp4"
+      codecs="mp4a.40.5"
+      startWithSAP="1">
+      <AudioChannelConfiguration
+        schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011"
+        value="2">
+      </AudioChannelConfiguration>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main" />
+      <SegmentTemplate
+        timescale="48000"
+        duration="307200"
+        initialization="vf_p01j0c7s_cdb26601-af20-496a-acc0-f42c8b0af92a-$RepresentationID$.dash"
+        media="vf_p01j0c7s_cdb26601-af20-496a-acc0-f42c8b0af92a-$RepresentationID$-$Number$.m4s">
+      </SegmentTemplate>
+      <Representation
+        id="audio_eng_1=48000"
+        bandwidth="48000">
+      </Representation>
+      <Representation
+        id="audio_eng_1=96000"
+        bandwidth="96000">
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

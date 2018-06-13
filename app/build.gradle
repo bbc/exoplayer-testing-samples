@@ -8,6 +8,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    androidTestImplementation group: 'commons-io', name: 'commons-io', version: '2.4'
+
     /** WIREMOCK */
     androidTestImplementation ("com.github.tomakehurst:wiremock:2.18.0") {
         //Using Android Version Instead
@@ -16,12 +18,14 @@ dependencies {
     }
     implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.8.1'
 }
 
 android {
     compileSdkVersion 27
     defaultConfig {
-        minSdkVersion 27
+        minSdkVersion 25
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
