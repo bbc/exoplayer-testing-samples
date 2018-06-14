@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
@@ -22,7 +23,7 @@ public class PlayerFactory {
     }
 
     public Player playerForUrl(String s) {
-        ExoPlayer exoplayer = createExoplayer();
+        SimpleExoPlayer exoplayer = createExoplayer();
         MediaSource dashDataSource = createDashDataSource(s);
 
         Player player = new Player(exoplayer);
@@ -40,7 +41,7 @@ public class PlayerFactory {
         return factory.createMediaSource(uri);
     }
 
-    private ExoPlayer createExoplayer() {
+    private SimpleExoPlayer createExoplayer() {
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         AdaptiveTrackSelection.Factory factory = new AdaptiveTrackSelection.Factory(bandwidthMeter);

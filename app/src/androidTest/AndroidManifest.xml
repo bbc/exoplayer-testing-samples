@@ -1,7 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="exoplayertestingsamples">
 
-    <application android:largeHeap="true"/>
+    <application android:largeHeap="true">
+        <activity android:name="android.app.Activity"/>
+    </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- used in the verification of audio playback -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
 </manifest>
