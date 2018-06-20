@@ -4,14 +4,20 @@ import android.view.Surface;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.analytics.AnalyticsListener;
+import com.google.android.exoplayer2.analytics.DefaultAnalyticsListener;
+import com.google.android.exoplayer2.source.MediaSourceEventListener;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.google.android.exoplayer2.C.TRACK_TYPE_VIDEO;
 
 public class Player {
 
@@ -24,6 +30,16 @@ public class Player {
         listeners = new CopyOnWriteArrayList<>();
         listener = new EventListenerAdapter(listeners);
         exoplayer.addListener(listener);
+        exoplayer.addAnalyticsListener(new DefaultAnalyticsListener() {
+            @Override
+            public void onDownstreamFormatChanged(EventTime eventTime, MediaSourceEventListener.MediaLoadData mediaLoadData) {
+                if(mediaLoadData.trackType == TRACK_TYPE_VIDEO) {
+                    for (PlayerStateListener playerStateListener : listeners) {
+                        playerStateListener.videoBitrate(mediaLoadData.trackFormat.bitrate);
+                    }
+                }
+            }
+        });
     }
 
     public void addStateListener(PlayerStateListener playerStateListener) {
@@ -39,27 +55,16 @@ public class Player {
         exoplayer.setVideoSurface(surface);
     }
 
-    private static class EventListenerAdapter implements com.google.android.exoplayer2.Player.EventListener {
+    public void release() {
+        exoplayer.release();
+    }
+
+    private static class EventListenerAdapter extends com.google.android.exoplayer2.Player.DefaultEventListener {
         private final List<PlayerStateListener> listeners;
 
         public EventListenerAdapter(List<PlayerStateListener> listeners) {
 
             this.listeners = listeners;
-        }
-
-        @Override
-        public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
-
-        }
-
-        @Override
-        public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-        }
-
-        @Override
-        public void onLoadingChanged(boolean isLoading) {
-
         }
 
         @Override
@@ -69,36 +74,6 @@ public class Player {
                     listener.ready();
                 }
             }
-
-        }
-
-        @Override
-        public void onRepeatModeChanged(int repeatMode) {
-
-        }
-
-        @Override
-        public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
-
-        }
-
-        @Override
-        public void onPlayerError(ExoPlaybackException error) {
-        }
-
-        @Override
-        public void onPositionDiscontinuity(int reason) {
-
-        }
-
-        @Override
-        public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
-        }
-
-        @Override
-        public void onSeekProcessed() {
-
         }
     }
 }

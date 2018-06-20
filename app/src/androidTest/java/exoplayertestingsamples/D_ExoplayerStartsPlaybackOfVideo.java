@@ -11,6 +11,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 import org.junit.Before;
@@ -19,8 +20,14 @@ import org.junit.Test;
 
 import player.Player;
 import player.PlayerFactory;
-import wiremockextensions.WiremockTestSupport;
+import testSupport.CapturingPlayerStateListener;
+import testSupport.WiremockTestSupport;
+import wiremockextensions.FileSourceAndroidAssetFolder;
+import wiremockextensions.WireMockStaticFileFromRequestPathTransformer;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.anyUrl;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +35,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class D_ExoplayerStartsPlaybackOfVideo {
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig());
+    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig()
+            .fileSource(new FileSourceAndroidAssetFolder(InstrumentationRegistry.getContext(), "streams"))
+            .extensions(new WireMockStaticFileFromRequestPathTransformer())
+
+    );
 
     @Rule
     public ActivityTestRule<Activity> activityTestRule = new ActivityTestRule<>(Activity.class);
@@ -37,7 +48,11 @@ public class D_ExoplayerStartsPlaybackOfVideo {
     @Before
     public void
     enableMappingsForStream() {
-        WiremockTestSupport.registerStubsForDashAsset(wireMockRule, "redGreenVideo");
+       // WiremockTestSupport.registerStubsForDashAsset(wireMockRule, "redGreenVideo");
+        WireMock.stubFor(get(anyUrl())
+                .willReturn(aResponse()
+                        .withTransformers("static-file-from-path")
+                ));
     }
 
     @Test

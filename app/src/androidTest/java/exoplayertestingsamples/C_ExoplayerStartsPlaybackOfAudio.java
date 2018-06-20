@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.GrantPermissionRule;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 
 import org.junit.Before;
@@ -14,8 +15,13 @@ import org.junit.Test;
 
 import player.Player;
 import player.PlayerFactory;
-import wiremockextensions.WiremockTestSupport;
+import testSupport.CapturingPlayerStateListener;
+import wiremockextensions.FileSourceAndroidAssetFolder;
+import wiremockextensions.WireMockStaticFileFromRequestPathTransformer;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.anyUrl;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -29,12 +35,19 @@ public class C_ExoplayerStartsPlaybackOfAudio {
 
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig());
+    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig()
+            .fileSource(new FileSourceAndroidAssetFolder(InstrumentationRegistry.getContext(), "streams"))
+            .extensions(new WireMockStaticFileFromRequestPathTransformer())
+
+    );
 
     @Before
     public void
     enableMappingsForStream() {
-        WiremockTestSupport.registerStubsForDashAsset(wireMockRule, "audio50hz");
+        WireMock.stubFor(get(anyUrl())
+                .willReturn(aResponse()
+                        .withTransformers("static-file-from-path")
+                ));
     }
 
 
@@ -63,7 +76,7 @@ public class C_ExoplayerStartsPlaybackOfAudio {
         visualizer.setEnabled(false);
 
 
-        long total = addUpTotalNumberOfFrequenciesHeardKindOf(output);
+        long total = addUpTotalNumberOfFrequenciesHeardKindOf(output); // you could determine which bucket has 50hz in and confirm the peak is seen in that bucket
         assertThat(total, greaterThan(0L));
 
     }

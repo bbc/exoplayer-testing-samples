@@ -3,7 +3,6 @@ package player;
 import android.content.Context;
 import android.net.Uri;
 
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -23,8 +22,11 @@ public class PlayerFactory {
     }
 
     public Player playerForUrl(String s) {
-        SimpleExoPlayer exoplayer = createExoplayer();
-        MediaSource dashDataSource = createDashDataSource(s);
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter.Builder()
+                                                            .setInitialBitrateEstimate(86000)
+                                                            .build();
+        SimpleExoPlayer exoplayer = createExoplayer(bandwidthMeter);
+        MediaSource dashDataSource = createDashDataSource(s,bandwidthMeter);
 
         Player player = new Player(exoplayer);
 
@@ -33,17 +35,17 @@ public class PlayerFactory {
         return player;
     }
 
-    private MediaSource createDashDataSource(String s) {
-        DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("integrationtests");
+    private MediaSource createDashDataSource(String s, DefaultBandwidthMeter defaultBandwidthMeter) {
+        DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("integrationtests",defaultBandwidthMeter);
         DefaultDashChunkSource.Factory chunkSourceFactory = new DefaultDashChunkSource.Factory(dataSourceFactory);
         Uri uri = Uri.parse(s);
         DashMediaSource.Factory factory = new DashMediaSource.Factory(chunkSourceFactory, dataSourceFactory);
         return factory.createMediaSource(uri);
     }
 
-    private SimpleExoPlayer createExoplayer() {
+    private SimpleExoPlayer createExoplayer(DefaultBandwidthMeter defaultBandwidthMeter) {
 
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        BandwidthMeter bandwidthMeter = defaultBandwidthMeter;
         AdaptiveTrackSelection.Factory factory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
         DefaultTrackSelector defaultTrackSelector = new DefaultTrackSelector(factory);
 
