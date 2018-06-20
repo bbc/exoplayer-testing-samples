@@ -12,7 +12,11 @@ This should help you abstract away Exoplayer letting you use a fast mock of this
 
 When pulling these together I accidentally assembled Exoplayer with a broken Bandwidth Meter resulting in ABR not working - lucky I had a test to illustrate it.
 
-The tests are more for example and could do we a large amount of refinement, but they should get you going.
+# The Tests
+
+More for example and could do we a large amount of refinement, but they should get you going. I suspect these tests leak memory left right and center.
+
+They are to be found in this folder ./app/src/androidTest/java and need to run on a device (or emulator).
 
 A_JustWireMock
  - a wiremock bootstrap test to confirm your enviroment works, you can delete these once its green.
@@ -59,4 +63,3 @@ The audio50hz sample is kind to the ears
 The red green video is all my own work :)
 
 
-I suspect these tests leak memory left right and center.

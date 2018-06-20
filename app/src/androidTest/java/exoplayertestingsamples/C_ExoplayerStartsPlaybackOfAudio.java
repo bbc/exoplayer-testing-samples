@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import player.Player;
 import player.PlayerFactory;
-import testSupport.CapturingPlayerStateListener;
+import player.CapturingPlayerStateListener;
 import wiremockextensions.FileSourceAndroidAssetFolder;
 import wiremockextensions.WireMockStaticFileFromRequestPathTransformer;
 

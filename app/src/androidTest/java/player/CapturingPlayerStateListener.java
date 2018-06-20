@@ -1,4 +1,4 @@
-package testSupport;
+package player;
 
 import android.os.SystemClock;
 

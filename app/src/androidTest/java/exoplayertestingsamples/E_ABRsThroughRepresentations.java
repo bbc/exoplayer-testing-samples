@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import player.Player;
 import player.PlayerFactory;
-import testSupport.CapturingPlayerStateListener;
+import player.CapturingPlayerStateListener;
 import wiremockextensions.FileSourceAndroidAssetFolder;
 import wiremockextensions.WireMockStaticFileFromRequestPathTransformerWithChunkedDelay;
 
