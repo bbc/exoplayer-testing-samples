@@ -63,3 +63,6 @@ The audio50hz sample is kind to the ears
 The red green video is all my own work :)
 
 
+# TODO
+
+Add contribution guidelines and review license. 
