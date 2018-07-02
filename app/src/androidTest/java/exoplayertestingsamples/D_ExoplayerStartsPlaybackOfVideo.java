@@ -58,12 +58,8 @@ public class D_ExoplayerStartsPlaybackOfVideo {
     public void
     rendersPixelsToTextureView() {
         final Context context = InstrumentationRegistry.getContext();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                player = new PlayerFactory(context).playerForUrl("http://localhost:8080/redGreenVideo/redGreenVideo.mpd");
-            }
-        });
+
+        player = new PlayerFactory(context).playerForUrl("http://localhost:8080/redGreenVideo/redGreenVideo.mpd");
 
         CapturingPlayerStateListener playerStateListener = new CapturingPlayerStateListener();
 

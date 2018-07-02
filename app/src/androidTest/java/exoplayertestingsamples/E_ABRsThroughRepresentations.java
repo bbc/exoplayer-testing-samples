@@ -59,13 +59,7 @@ public class E_ABRsThroughRepresentations {
     public void
     reportsBitrate() {
         final Context context = InstrumentationRegistry.getContext();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                player = new PlayerFactory(context).playerForUrl("http://localhost:8080/bigbuckbunny/bigbuckbunny.mpd");
-            }
-        });
-
+        player = new PlayerFactory(context).playerForUrl("http://localhost:8080/bigbuckbunny/bigbuckbunny.mpd");
         CapturingPlayerStateListener playerStateListener = new CapturingPlayerStateListener();
 
         player.addStateListener(playerStateListener);
