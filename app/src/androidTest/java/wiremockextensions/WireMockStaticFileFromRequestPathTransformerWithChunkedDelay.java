@@ -80,9 +80,7 @@ public class WireMockStaticFileFromRequestPathTransformerWithChunkedDelay extend
     }
 
     private int timeForRate(int bps, int totalBytes) {
-        double timeFor1BytePS = 1.0 / (bps / 8.0);
-        int durationInSeconds = (int) (ceil(totalBytes * timeFor1BytePS));
-        return durationInSeconds * 1000;
+        return (totalBytes * 8) / bps;
     }
 
 
