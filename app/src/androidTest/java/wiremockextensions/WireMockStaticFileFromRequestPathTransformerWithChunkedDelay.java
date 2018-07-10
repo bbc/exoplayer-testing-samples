@@ -48,7 +48,7 @@ public class WireMockStaticFileFromRequestPathTransformerWithChunkedDelay extend
                 bps = abrLadderBPS[3];
             }
             if (bps > -1) {
-                responseDefBuilder = applySpeedRestriction(bps, bytesFromInputStream, responseDefBuilder);
+                responseDefBuilder = applySpeedRestriction(bps, responseDefBuilder, bytesFromInputStream.length);
             }
 
         }
@@ -68,11 +68,10 @@ public class WireMockStaticFileFromRequestPathTransformerWithChunkedDelay extend
     }
 
 
-    private  ResponseDefinitionBuilder applySpeedRestriction(int bps, byte[] bytesFromInputStream, ResponseDefinitionBuilder responseDefBuilder) {
-        int totalDuration = totalTimeApproximatingRate(bps, bytesFromInputStream.length);
-        int numberOfChunks = numberOf1KBChunks(bytesFromInputStream.length);
-        responseDefBuilder = responseDefBuilder.withChunkedDribbleDelay(numberOfChunks, totalDuration);
-        return responseDefBuilder;
+    private  ResponseDefinitionBuilder applySpeedRestriction(int bps, ResponseDefinitionBuilder builder, int totalBytes) {
+        int totalDuration = timeForRate(bps, totalBytes);
+        int numberOfChunks = numberOf1KBChunks(totalBytes);
+        return builder.withChunkedDribbleDelay(numberOfChunks, totalDuration);
     }
 
 
@@ -80,9 +79,9 @@ public class WireMockStaticFileFromRequestPathTransformerWithChunkedDelay extend
         return length / 1024;
     }
 
-    private int totalTimeApproximatingRate(int bps, int inputStreamLength) {
-        double timeForOneBytePerSecond = 1.0 / (bps / 8.0);
-        int durationInSeconds = (int) (ceil(inputStreamLength * timeForOneBytePerSecond));
+    private int timeForRate(int bps, int totalBytes) {
+        double timeFor1BytePS = 1.0 / (bps / 8.0);
+        int durationInSeconds = (int) (ceil(totalBytes * timeFor1BytePS));
         return durationInSeconds * 1000;
     }
 
