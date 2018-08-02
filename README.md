@@ -1,6 +1,6 @@
 # exoplayer-testing-samples
 
-Samples to illustrate testing techniques for media playback on android using exoplayer
+Samples to illustrate testing techniques for media playback on android using exoplayer, companion repo to https://medium.com/@rossbeazley/on-updating-to-exoplayer-v2-and-how-we-test-our-integration-d06fe470ff3c
 
 We use similar techniques to "test our integration" of Exoplayer.
 
