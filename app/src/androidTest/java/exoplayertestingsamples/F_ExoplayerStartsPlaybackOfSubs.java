@@ -57,19 +57,19 @@ public class F_ExoplayerStartsPlaybackOfSubs {
 
     @Test
     public void
-    rendersPixelsToTextureView() {
+    rendersSubtitlesToViewGroup() {
         final Context context = InstrumentationRegistry.getContext();
 
         ViewGroup subsViewContainer = createSubsViewInActivity();
 
-        player = new PlayerFactory(context).playerForUrlWithSubs("http://localhost:8080/redGreenVideo/redGreenOnlyVideo.mpd","http://localhost:8080/subs/some.ttml");
+        player = new PlayerFactory(context)
+                .playerForUrlWithSubs("http://localhost:8080/redGreenVideo/redGreenOnlyVideo.mpd",
+                                    "http://localhost:8080/subs/some.ttml");
 
         player.attachViewGroupForSubs(subsViewContainer);
 
         CapturingPlayerStateListener playerStateListener = new CapturingPlayerStateListener();
-
         player.addStateListener(playerStateListener);
-
         playerStateListener.awaitReady();
 
         player.play();
