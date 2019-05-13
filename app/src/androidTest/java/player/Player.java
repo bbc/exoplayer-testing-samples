@@ -1,6 +1,7 @@
 package player;
 
 import android.view.Surface;
+import android.view.ViewGroup;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -13,6 +14,7 @@ import com.google.android.exoplayer2.analytics.DefaultAnalyticsListener;
 import com.google.android.exoplayer2.source.MediaSourceEventListener;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.ui.SubtitleView;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -57,6 +59,22 @@ public class Player {
 
     public void release() {
         exoplayer.release();
+    }
+
+    public void attachViewGroupForSubs(final ViewGroup subsViewContainer) {
+        final SubtitleView subsView = new SubtitleView(subsViewContainer.getContext());
+        subsView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        subsView.setUserDefaultStyle();
+        subsView.setUserDefaultTextSize();
+        subsViewContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                subsViewContainer.addView(subsView);
+            }
+        });
+
+
+        exoplayer.addTextOutput(subsView);
     }
 
     private static class EventListenerAdapter extends com.google.android.exoplayer2.Player.DefaultEventListener {

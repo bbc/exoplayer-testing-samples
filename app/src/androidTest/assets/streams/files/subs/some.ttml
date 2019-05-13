@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tt xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:ttp="http://www.w3.org/2006/10/ttaf1#parameter" ttp:timeBase="media" xmlns:tts="http://www.w3.org/2006/10/ttaf1#style" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
+  <head>
+    <metadata>
+      <ttm:title>
+        ExoTestingSamples Subs with really big coloured boxes
+      </ttm:title>
+      <ttm:copyright>
+        Its Not
+      </ttm:copyright>
+    </metadata>
+    <styling>
+      <style id="s0" tts:backgroundColor="red" tts:fontStyle="normal" tts:fontSize="26px" tts:fontFamily="sansSerif" tts:color="red" />
+      <style id="s1" tts:backgroundColor="#00ff00" tts:fontStyle="normal" tts:fontSize="26px" tts:fontFamily="sansSerif" tts:color="#00ff00" />
+    </styling>
+  </head>
+  <body tts:textAlign="center" style="s0">
+    <div>
+      <p begin="00:00:00.00" id="p0" end="00:00:02.00">RED RED RED RED RED RED RED RED RED</p>
+      <p begin="00:00:02.00" id="p1" end="00:01:05.40" style="s1">GREEN GREEN GREEN GREEN GREEN GREEN GREEN GREEN GREEN</p>
+      <p begin="00:01:05.40" id="p2" end="00:10:00.00" style="s1">REFACTOR TO LOWER CONNASCENCE</p>
+    </div>
+  </body>
+</tt>
